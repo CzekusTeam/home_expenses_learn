@@ -1,0 +1,7 @@
+<%= simple_form_for @form do |f| %>
+<%= f.input :amount, as: :integer %>
+<%= f.input :category, collection: Category.all %>
+<%= f.input :description, as: :text %>
+<%= f.submit 'Add' %>
+
+<% end %>

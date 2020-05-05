@@ -10,10 +10,26 @@
   </head>
 
   <body>
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="nav navbar-nav">
+      <%= nav_link 'Home', root_path %>
+      <%= nav_link 'Add Expense', new_expense_path %>
+      <%= nav_link 'Sign In', new_user_session_path %>
+    </div>
+  </nav>
 
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <div class="container">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <% flash.each do |type, message| %>
+      <div class="alert alert-<%=type %>" role="alert">
+        <strong><%=message %></strong>
+      </div>
+    <% end %>
     <%= yield %>
+  </div>
+
   </body>
 
 </html>
