@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "AddExpenses", type: :feature do
   let(:user) { FactoryBot.create(:user) }
   let!(:category) { FactoryBot.create(:category) }
+  let!(:period) { FactoryBot.create(:period) }
 
 
   scenario 'user adds new expense' do
@@ -19,6 +20,7 @@ RSpec.feature "AddExpenses", type: :feature do
     expect {
       fill_in :Amount, with: 10
       select category.name, from: :Category
+      select period.name, from: :Period
       fill_in :Description, with: 'Money spent on food'
 
       click_on 'Add'

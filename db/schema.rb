@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_140522) do
+ActiveRecord::Schema.define(version: 2020_05_08_065153) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -30,6 +30,10 @@ ActiveRecord::Schema.define(version: 2020_05_05_140522) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "parent_id"
+    t.integer "organisation_id"
+    t.index ["organisation_id"], name: "index_categories_on_organisation_id"
+    t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -39,7 +43,9 @@ ActiveRecord::Schema.define(version: 2020_05_05_140522) do
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "period_id"
     t.index ["category_id"], name: "index_expenses_on_category_id"
+    t.index ["period_id"], name: "index_expenses_on_period_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
@@ -56,6 +62,25 @@ ActiveRecord::Schema.define(version: 2020_05_05_140522) do
     t.index ["user_id", "organisation_id"], name: "index_organisations_users_on_user_id_and_organisation_id"
   end
 
+  create_table "periods", force: :cascade do |t|
+    t.integer "month"
+    t.integer "year"
+    t.integer "organisation_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organisation_id"], name: "index_periods_on_organisation_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.integer "period_id", null: false
+    t.integer "category_id", null: false
+    t.decimal "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_plans_on_category_id"
+    t.index ["period_id"], name: "index_plans_on_period_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -64,10 +89,18 @@ ActiveRecord::Schema.define(version: 2020_05_05_140522) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "current_organisation_id"
+    t.index ["current_organisation_id"], name: "index_users_on_current_organisation_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "categories", "organisations"
   add_foreign_key "expenses", "categories"
+  add_foreign_key "expenses", "periods"
   add_foreign_key "expenses", "users"
+  add_foreign_key "periods", "organisations"
+  add_foreign_key "plans", "categories"
+  add_foreign_key "plans", "periods"
+  add_foreign_key "users", "organisations", column: "current_organisation_id"
 end

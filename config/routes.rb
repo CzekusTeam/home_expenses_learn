@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :plans
+  resources :periods
   resources :expenses
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

@@ -1,4 +1,4 @@
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover table-sm">
   <thead class="thead-dark">
   <tr>
     <th>Amount</th>
@@ -13,7 +13,7 @@
       <td scope="row"><%= e.amount %></td>
       <td><%= e.category.name %></td>
       <td><%= e.description %></td>
-      <td><%= e.created_at %></td>
+      <td><%= e.period&.name %></td>
     </tr>
   <% end %>
 
