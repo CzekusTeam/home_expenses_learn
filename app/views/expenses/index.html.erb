@@ -4,6 +4,7 @@
     <th>Amount</th>
     <th>Category</th>
     <th>Description</th>
+    <th>Date</th>
   </tr>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
       <td scope="row"><%= e.amount %></td>
       <td><%= e.category.name %></td>
       <td><%= e.description %></td>
+      <td><%= e.created_at %></td>
     </tr>
   <% end %>
 

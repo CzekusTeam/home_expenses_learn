@@ -26,7 +26,5 @@ RSpec.feature "AddExpenses", type: :feature do
 
     expect(page).to have_content 'Expense added'
     expect(page).to have_content 'Money spent on food'
-
-
   end
 end

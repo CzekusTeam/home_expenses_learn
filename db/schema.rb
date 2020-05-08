@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_074302) do
+ActiveRecord::Schema.define(version: 2020_05_05_140522) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 2020_05_04_074302) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_expenses_on_category_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "organisations_users", id: false, force: :cascade do |t|
+    t.integer "organisation_id", null: false
+    t.integer "user_id", null: false
+    t.index ["organisation_id", "user_id"], name: "index_organisations_users_on_organisation_id_and_user_id"
+    t.index ["user_id", "organisation_id"], name: "index_organisations_users_on_user_id_and_organisation_id"
   end
 
   create_table "users", force: :cascade do |t|

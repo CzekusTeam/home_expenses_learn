@@ -1,10 +1,11 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation
+  permit_params :email, organisation_ids: []
 
   index do
     selectable_column
     id_column
     column :email
+    column :organisations
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -12,6 +13,7 @@ ActiveAdmin.register User do
   end
 
   filter :email
+  filter :organisations
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
@@ -19,8 +21,7 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.input :email
-      f.input :password
-      f.input :password_confirmation
+      f.input :organisations, :as => :check_boxes
     end
     f.actions
   end
